@@ -10,14 +10,16 @@
     },
     {
       "name": "jquick",
-      "email": "314127900@qq.com"
+      "email": "314127900@qq.com",
+      "role": "developer"
     },
     {
       "name": "nick fan",
-      "email": "nickfan81@gmail.com"
+      "email": "nickfan81@gmail.com",
+      "role": "developer"
     }
   ],
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "require": {
     "php": ">=7.0",
     "ext-zookeeper": "*",
