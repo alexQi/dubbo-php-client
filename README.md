@@ -1,6 +1,6 @@
 # dubbo-php-client
 
-[![License](https://poser.pugx.org/thomas-squall/php7-mongo-driver/license.svg)](https://packagist.org/packages/thomas-squall/php7-mongo-driver)
+[![License](https://poser.pugx.org/thomas-squall/php7-mongo-driver/license.svg)](https://packagist.org/packages/alex-qiu/dubbo-php-client)
 
 the dubbo php client(中文说明往下拉)
 
