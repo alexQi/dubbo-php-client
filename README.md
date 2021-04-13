@@ -1,4 +1,7 @@
 # dubbo-php-client
+
+[![License](https://poser.pugx.org/thomas-squall/php7-mongo-driver/license.svg)](https://packagist.org/packages/thomas-squall/php7-mongo-driver)
+
 the dubbo php client(中文说明往下拉)
 
 [Dubbo](https://github.com/alibaba/dubbo) is a distributed service framework empowers applications with service import/export capability with high performance RPC.  
