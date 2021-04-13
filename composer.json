@@ -24,9 +24,7 @@
   "require": {
     "php": ">=7.0",
     "ext-zookeeper": "*",
-    "icecave/chrono": "~1",
-    "heyanlong/flax": "^1.0",
-    "guzzlehttp/guzzle": "~5.3|~6.0"
+    "alex-qiu/flax": "dev-master"
   },
   "require-dev": {
     "phpunit/phpunit": "~4.0"
