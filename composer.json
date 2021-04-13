@@ -24,7 +24,7 @@
   "require": {
     "php": ">=7.0",
     "ext-zookeeper": "*",
-    "alex-qiu/flax": "dev-master"
+    "alex-qiu/flax": "^1.0"
   },
   "require-dev": {
     "phpunit/phpunit": "~4.0"
