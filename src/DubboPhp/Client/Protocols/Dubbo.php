@@ -44,6 +44,7 @@ class Dubbo extends Invoker
     public function __call($name, $arguments)
     {
         $schemeInfo = parse_url($this->url);
+
         return $this->connect(
             $schemeInfo['host'],
             $schemeInfo['port'],
@@ -99,7 +100,6 @@ class Dubbo extends Invoker
                     break;
                 }
             } while (true);
-
             socket_close($socket);
             return $this->parser($data);
         } catch (\Exception $e) {
@@ -147,41 +147,18 @@ class Dubbo extends Invoker
                 return $data->unixTime();
             }
             if ($data instanceof stdClass) {
-                //                foreach ($data as $key => $value) {
-                //                    if (!empty($value->cause)) {
-                //                        # TODO: 增加了对dubbo JAVA 抛出的异常进行特殊过滤处理，后续可以完善增加专门处理类的
-                //                        $error_message = '';
-                //                        if (!empty($value->cause->stackTrace)) {
-                //                            foreach ($value as $ek => $ev) {
-                //                                if ($ev instanceof Vector) {
-                //                                    print_r($ev->elements());
-                //                                    foreach ($ev as $ok => $jv) {
-                //                                        $error_message .= $ek . ':' . $ev;
-                //                                    }
-                //                                } elseif ($ev instanceof stdClass) {
-                //                                    print_r($ev);
-                //                                    foreach ($ev as $ok => $jv) {
-                //                                        $error_message .= $ek . ':' . $ev;
-                //                                    }
-                //                                } else {
-                //                                    $error_message .= $ek . ':' . $ev;
-                //                                }
-                //                            }
-                //                            $data->error_message = $error_message;
-                //                            print_r($value->cause->stackTrace);
-                //                            print_r("=======================");
-                //                        } else {
-                //                            $data->$key = $this->recursive($value);
-                //                        }
-                //                    }
-                //                }
-                if (is_array($data)) {
-                    foreach ($data as $key => $value) {
-                        $data[$key] = $this->recursive($value);
+                foreach ($data as $key => $value) {
+                    if (empty($value->cause)) {
+                        $data->$key = $this->recursive($value);
                     }
                 }
-                return $data;
             }
+            if (is_array($data)) {
+                foreach ($data as $key => $value) {
+                    $data[$key] = $this->recursive($value);
+                }
+            }
+            return $data;
         } catch
         (\Exception $e) {
             throw new Exception($e->getMessage());

@@ -99,7 +99,7 @@ $zk = new ZookeeperDemo('172.31.214.198:2181');
 //var_dump($zk->get('/'));
 //var_dump($zk->getChildren('/dubbo'));
 //var_dump($zk->getChildren('/dubbo/com.tuner.basecenter.service.newservice.CenterUserService/providers'));
-$p = $zk->getChildren('/dubbo/com.tuner.jdmob.service.JdDataPackageService/providers');
+$p = $zk->getChildren('/dubbo/com.tuner.basecenter.service.newservice.CenterUserService/providers');
 print_r($p);
 //echo urldecode($p[0]);
 //$p = $zk->getChildren('/dubbo/com.tuner.basecenter.service.newservice.CenterUserService/consumers');
@@ -107,3 +107,4 @@ print_r($p);
 //$zc = new Zookeeper();
 //$zc->connect('localhost:2181');
 //var_dump($zc->get('/zookeeper'));
+

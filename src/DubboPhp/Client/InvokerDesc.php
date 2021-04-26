@@ -8,22 +8,23 @@
 
 namespace DubboPhp\Client;
 
-
 class InvokerDesc
 {
-    private $serviceName ;
-    private $group ;
-    private $version ;
+    private $serviceName;
+    private $group;
+    private $version;
     private $schema = 'jsonrpc';
 
-    public function __construct($serviceName, $version=null, $group=null,$schema='jsonrpc'){
-        $this->serviceName = $serviceName ;
-        $this->version = $version;
-        $this->group = $group;
+    public function __construct($serviceName, $version = null, $group = null, $schema = 'jsonrpc')
+    {
+        $this->serviceName = $serviceName;
+        $this->version     = $version;
+        $this->group       = $group;
         !empty($schema) && $this->schema = $schema;
     }
 
-    public function getService(){
+    public function getService()
+    {
         return $this->serviceName;
     }
 
@@ -32,17 +33,20 @@ class InvokerDesc
         return $this->toString();
     }
 
-    public function toString(){
-        $group_str = !is_null($this->group) ? $this->group : ' ';
+    public function toString()
+    {
+        $group_str   = !is_null($this->group) ? $this->group : ' ';
         $version_str = !is_null($this->version) ? $this->version : ' ';
-        return $this->serviceName.'_'.$group_str.'_'.$version_str.'_'.$this->schema;
+        return $this->serviceName . '_' . $group_str . '_' . $version_str . '_' . $this->schema;
     }
 
-    public function isMatch($group,$version,$schema='jsonrpc'){
+    public function isMatch($group, $version, $schema = 'jsonrpc')
+    {
         return $this->group === $group && $this->version === $version && $this->schema === $schema;
     }
 
-    public function isMatchDesc($desc){
+    public function isMatchDesc($desc)
+    {
         return $this->group == $desc->group && $this->version == $desc->version && $this->schema == $desc->schema;
     }
 

@@ -84,18 +84,16 @@ class Register
 
         $path     = $this->getSubscribePath($serviceName);
         $children = $this->zookeeper->getChildren($path);
+
         if (count($children) > 0) {
             foreach ($children as $key => $provider) {
-                $provider = urldecode($provider);
-                $this->methodChangeHandler($invokDesc, $provider);
+                $this->methodChangeHandler($invokDesc, urldecode($provider));
 
-                # TODO 多协议版本的时候需要判断是否是 jsonnpc 调用
-                //                if (strpos($provider, Client::PROTOCOL_JSONRPC) !== false) {
-                //                    $provider = urldecode($provider);
-                //                    $this->methodChangeHandler($invokDesc, $provider);
-                //                } else {
-                //                    $this->providersCluster->addProvider($invokDesc, $provider);
-                //                }
+//                if (strpos($provider, Client::PROTOCOL_JSONRPC) === false) {
+//                    $this->methodChangeHandler($invokDesc, urldecode($provider));
+//                } else {
+//                    $this->providersCluster->addProvider($invokDesc, $provider);
+//                }
             }
             $this->configurators();
         }
@@ -118,6 +116,7 @@ class Register
         $providerHost = $this->providersCluster->getProvider($invokDesc);
         $invoker->setHost(Invoker::genDubboUrl($providerHost, $invokDesc));
         $registerNode = $this->makeRegistryNode($invokDesc->getService());
+
         try {
             $parts   = explode('/', $registerNode);
             $parts   = array_filter($parts);
@@ -155,7 +154,7 @@ class Register
             if (strpos($provider, Client::PROTOCOL_JSONRPC) !== false) {
                 $this->providersCluster->addProvider(
                     $invokerDesc,
-                    'http://' . $schemeInfo['host'] . ':' . $schemeInfo['port'],
+                    'http://' . $schemeInfo['host'] . ':' . $schemeInfo['port']
                 );
             } else {
                 $this->providersCluster->addProvider($invokerDesc, $provider);
