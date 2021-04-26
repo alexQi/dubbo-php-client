@@ -67,7 +67,7 @@ class Client
         $serviceVersion  = !$forceVgp ? $this->register->getServiceVersion() : $version;
         $serviceGroup    = !$forceVgp ? $this->register->getServiceGroup() : $group;
         $serviceProtocol = !$forceVgp ? $this->register->getServiceProtocol() : $protocol;
-        $invokerDesc     = new InvokerDesc($serviceName, $serviceVersion, $serviceGroup, $protocol);
+        $invokerDesc     = new InvokerDesc($serviceName, $serviceVersion, $serviceGroup, $serviceProtocol);
         $invoker         = $this->register->getInvoker($invokerDesc);
         if (!$invoker) {
             $invoker = $this->makeInvokerByProtocol($serviceProtocol);

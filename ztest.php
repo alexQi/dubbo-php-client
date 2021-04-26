@@ -39,7 +39,7 @@ class Zookeeper_Example
 	 * @param string $address CSV list of host:port values (e.g. "host1:2181,host2:2181")
 	 */
 	public function __construct($address) {
-		$this->zookeeper = new zookeeper($address);
+		$this->zookeeper = new Zookeeper($address);
 	}
 	/**
 	 * Set a node to a value. If the node doesn't exist yet, it is created.
@@ -217,7 +217,7 @@ class Zookeeper_Example
 		}
 	}
 }
-$zk = new Zookeeper_Example('localhost:2181');
+$zk = new Zookeeper_Example('192.168.62.31/:2181');
 var_dump($zk->get('/dubbo'));
 var_dump($zk->get('/'));
 var_dump($zk->getChildren('/'));
