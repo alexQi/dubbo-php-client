@@ -24,6 +24,7 @@
   "require": {
     "php": ">=7.0",
     "ext-zookeeper": "*",
+    "ext-sockets": "*",
     "alex-qiu/flax": "^1.0"
   },
   "require-dev": {

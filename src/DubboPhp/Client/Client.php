@@ -8,28 +8,28 @@
 
 namespace DubboPhp\Client;
 
-
 class Client
 {
-    const VERSION_DEFAULT = '0.0.0';
+    const VERSION_DEFAULT  = '0.0.0';
     const PROTOCOL_JSONRPC = 'jsonrpc';
     const PROTOCOL_HESSIAN = 'hessian';
-    const PROTOCOL_DUBBO = 'dubbo';
+    const PROTOCOL_DUBBO   = 'dubbo';
 
     /**
      * @var Register
      */
-    protected $register;
+    protected        $register;
     protected static $protocolSupports = [
         self::PROTOCOL_JSONRPC => true,
         self::PROTOCOL_HESSIAN => false,
-        self::PROTOCOL_DUBBO => true,
+        self::PROTOCOL_DUBBO   => true,
     ];
-    protected static $protocols = [
+    protected static $protocols        = [
     ];
 
     /**
      * Client constructor.
+     *
      * @param array $options
      */
     public function __construct($options = [])
@@ -37,40 +37,57 @@ class Client
         $this->register = new Register($options);
     }
 
-    public function factory($options=[]){
+    /**
+     * @param array $options
+     *
+     * @return $this
+     */
+    public function factory($options = [])
+    {
         return new static($options);
     }
 
     /**
-     * @param $serviceName  (service name e.g. com.xx.serviceName)
-     * @param $version  (service version e.g. 1.0)
-     * @param $group    (service group)
-     * @param string $protocol (service protocol e.g. jsonrpc dubbo hessian)
-     * @return Invoker
+     * @param        $serviceName
+     * @param string $protocol
+     * @param null   $group
+     * @param string $version
+     * @param bool   $forceVgp
+     *
+     * @return Invoker|mixed
+     * @throws DubboPhpException
      */
-    public function getService($serviceName, $version = self::VERSION_DEFAULT, $group = null, $protocol = self::PROTOCOL_JSONRPC, $forceVgp = false){
-        $serviceVersion = !$forceVgp ? $this->register->getServiceVersion() : $version;
-        $serviceGroup = !$forceVgp ? $this->register->getServiceGroup() : $group;
+    public function getService(
+        $serviceName,
+        $forceVgp = false,
+        $group = null,
+        $protocol = self::PROTOCOL_JSONRPC,
+        $version = self::VERSION_DEFAULT
+    ) {
+        $serviceVersion  = !$forceVgp ? $this->register->getServiceVersion() : $version;
+        $serviceGroup    = !$forceVgp ? $this->register->getServiceGroup() : $group;
         $serviceProtocol = !$forceVgp ? $this->register->getServiceProtocol() : $protocol;
-        $invokerDesc = new InvokerDesc($serviceName, $serviceVersion, $serviceGroup, $protocol);
-        $invoker = $this->register->getInvoker($invokerDesc);
-        if(!$invoker){
+        $invokerDesc     = new InvokerDesc($serviceName, $serviceVersion, $serviceGroup, $protocol);
+        $invoker         = $this->register->getInvoker($invokerDesc);
+        if (!$invoker) {
             $invoker = $this->makeInvokerByProtocol($serviceProtocol);
-            $this->register->register($invokerDesc,$invoker);
+            $this->register->register($invokerDesc, $invoker);
         }
         return $invoker;
     }
 
     /**
      * @param $protocol
+     *
      * @return Invoker instance of specific protocol
      * @throws \DubboPhp\Client\DubboPhpException
      */
-    private function makeInvokerByProtocol($protocol=self::PROTOCOL_JSONRPC,$url=null, $debug=false){
-        if(!isset(self::$protocolSupports[$protocol]) || self::$protocolSupports[$protocol]!=true){
+    private function makeInvokerByProtocol($protocol = self::PROTOCOL_JSONRPC, $url = null, $debug = false)
+    {
+        if (!isset(self::$protocolSupports[$protocol]) || self::$protocolSupports[$protocol] != true) {
             throw new DubboPhpException('Protocol Not Supported yet.');
         }
-        $providerName = 'DubboPhp\\Client\\Protocols\\'.ucfirst($protocol);
+        $providerName = 'DubboPhp\\Client\\Protocols\\' . ucfirst($protocol);
         return new $providerName($url, $debug);
     }
 
