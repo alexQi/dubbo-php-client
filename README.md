@@ -148,7 +148,7 @@ config/app.php的
 providers数组中增加：
 
 ```php
-DubboPhp\Client\DubboPhpClientServiceProvider::class
+DubboPhp\Client\Providers\DubboServiceProvider::class
 ```
 
 aliases别名数组中增加：

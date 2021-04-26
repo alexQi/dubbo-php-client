@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Facade;
 /**
  * Class DubboPhpClientFactory
  * @method static Client getService($serviceName, $forceVgp = false, $group = null, $protocol = Client::PROTOCOL_JSONRPC, $version = Client::VERSION_DEFAULT)
+ * @method static Client factory($options = [])
  *
  * @package DubboPhp\Client\Facades
  */
